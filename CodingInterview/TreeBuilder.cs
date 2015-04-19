@@ -4,15 +4,31 @@ using System.Linq;
 
 namespace CodingInterview
 {
+    /// <summary>
+    /// Converts flat list to tree structure.
+    /// </summary>
+    /// <typeparam name="T">Node Value type</typeparam>
     public class TreeBuilder<T>
     {
         private readonly Dictionary<int, Node<T>> _lookup = new Dictionary<int, Node<T>>();
 
+        /// <summary>
+        /// Builds tree structure.
+        /// </summary>
+        /// <returns>List of top level nodes.</returns>
         public List<Node<T>> BuildTree()
         {
             return _lookup.Values.Where(x => x.Parent == null).ToList();
         }
 
+        /// <summary>
+        /// Adds nodes range.
+        /// </summary>
+        /// <typeparam name="I">Item type</typeparam>
+        /// <param name="items">Items collection</param>
+        /// <param name="getId">Function to obtain Item Id</param>
+        /// <param name="getValue">Function to obtain Item Value</param>
+        /// <param name="getPrentId">Function to obtain Item ParentId</param>
         public void AddNodes<I>(IEnumerable<I> items, Func<I, int> getId, Func<I, T> getValue, Func<I, int?> getPrentId)
         {
             foreach (var item in items)
@@ -25,6 +41,12 @@ namespace CodingInterview
             }
         }
 
+        /// <summary>
+        /// Adds single node.
+        /// </summary>
+        /// <param name="id">Node Id</param>
+        /// <param name="value">Node Value</param>
+        /// <param name="parentId">Node ParentId</param>
         public void AddNode(int id, T value, int? parentId)
         {
             Node<T> node;
