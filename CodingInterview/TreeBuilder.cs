@@ -26,18 +26,14 @@ namespace CodingInterview
         /// </summary>
         /// <typeparam name="I">Item type</typeparam>
         /// <param name="items">Items collection</param>
-        /// <param name="getId">Function to obtain Item Id</param>
-        /// <param name="getValue">Function to obtain Item Value</param>
-        /// <param name="getPrentId">Function to obtain Item ParentId</param>
-        public void AddNodes<I>(IEnumerable<I> items, Func<I, int> getId, Func<I, T> getValue, Func<I, int?> getPrentId)
+        /// <param name="id">Function to obtain Item Id</param>
+        /// <param name="value">Function to obtain Item Value</param>
+        /// <param name="parentId">Function to obtain Item ParentId</param>
+        public void AddNodes<I>(IEnumerable<I> items, Func<I, int> id, Func<I, T> value, Func<I, int?> parentId)
         {
             foreach (var item in items)
             {
-                var value = getValue(item);
-                var id = getId(item);
-                var parentId = getPrentId(item);
-
-                AddNode(id, value, parentId);
+                AddNode(id(item), value(item), parentId(item));
             }
         }
 
